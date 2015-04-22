@@ -1,0 +1,2 @@
+rootProject.name = 'spring-security-oauth2'
+include  "common-config", "oauth2-services","oauth2-web"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<timestamp key="byDate" datePattern="yyyy-MM-dd" />
+		
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%thread] %-5level %class{36}.%M %L - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/hu-mls.log</file>
+        <encoder>
+            <pattern>%date %-5level [%thread] - [%logger] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    Daily rolling file appender
+	<appender name="DFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>../logs/hu-mls.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>hu-mls.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+ 
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</Pattern>
+		</layout>
+	</appender> -->
+	
+	<appender name="FileRollingAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>../logs/template-config.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>../logs/template-config_%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>20000KB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="com.test" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FileRollingAppender" />
+	</logger>
+	
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<logger name="org.springframework.boot" level="INFO" />
+	<logger name="org.springframework.security" level="ERROR" />
+	<logger name="org.glassfish.jersey" level="DEBUG" />
+</configuration>
